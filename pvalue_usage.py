@@ -1,72 +1,59 @@
 import networkx as nx
+import matplotlib.pyplot as plt
 
-# Creazione del grafo
+# Create a directed graph
 G = nx.DiGraph()
 
-# Aggiunta dei nodi
-G.add_node("P-Value Utilization Across Fields")
-G.add_node("Medicine and Healthcare")
-G.add_node("Clinical Trials")
-G.add_node("Medical Research")
-G.add_node("Treatment Efficacy")
-G.add_node("Social Sciences")
-G.add_node("Psychology")
-G.add_node("Sociology")
-G.add_node("Education")
-G.add_node("Behavioural Hypotheses")
-G.add_node("Economics and Business")
-G.add_node("Market Research")
-G.add_node("Policy Evaluation")
-G.add_node("Economic Modelling")
-G.add_node("Biology and Environmental Science")
-G.add_node("Genetic Variations")
-G.add_node("Environmental Impacts")
-G.add_node("Ecological Data")
-G.add_node("Common Statistical Tests Utilizing p-value")
+# Add nodes
 G.add_node("t-Tests")
-G.add_node("Compare Means of Two Groups")
-G.add_node("ANOVA (Analysis of Variance)")
-G.add_node("Compare Means Among Three or More Groups")
+G.add_node("ANOVA")
 G.add_node("Chi-Square Tests")
-G.add_node("Categorical Data")
-G.add_node("Association Between Variables")
 G.add_node("Chi-Square Goodness of Fit")
-G.add_node("Sample Distribution vs. Expected Distribution")
 G.add_node("Regression Analysis")
-G.add_node("Relationship Between Dependent and Independent Variables")
+G.add_node("Used to compare the means of two groups.")
+G.add_node("Used to compare means among three or more groups.")
+G.add_node("Used for categorical data to assess the association between variables.")
+G.add_node("Tests if a sample distribution matches an expected distribution.")
+G.add_node("Used to examine the relationship between dependent and independent variables.")
 
-# Aggiunta degli archi
-G.add_edges_from([
-    ("P-Value Utilization Across Fields", "Medicine and Healthcare"),
-    ("Medicine and Healthcare", "Clinical Trials"),
-    ("Medicine and Healthcare", "Medical Research"),
-    ("Medical Research", "Treatment Efficacy"),
-    ("P-Value Utilization Across Fields", "Social Sciences"),
-    ("Social Sciences", "Psychology"),
-    ("Social Sciences", "Sociology"),
-    ("Social Sciences", "Education"),
-    ("Education", "Behavioural Hypotheses"),
-    ("P-Value Utilization Across Fields", "Economics and Business"),
-    ("Economics and Business", "Market Research"),
-    ("Economics and Business", "Policy Evaluation"),
-    ("Economics and Business", "Economic Modelling"),
-    ("P-Value Utilization Across Fields", "Biology and Environmental Science"),
-    ("Biology and Environmental Science", "Genetic Variations"),
-    ("Biology and Environmental Science", "Environmental Impacts"),
-    ("Biology and Environmental Science", "Ecological Data"),
-    ("P-Value Utilization Across Fields", "Common Statistical Tests Utilizing p-value"),
-    ("Common Statistical Tests Utilizing p-value", "t-Tests"),
-    ("t-Tests", "Compare Means of Two Groups"),
-    ("Common Statistical Tests Utilizing p-value", "ANOVA (Analysis of Variance)"),
-    ("ANOVA (Analysis of Variance)", "Compare Means Among Three or More Groups"),
-    ("Common Statistical Tests Utilizing p-value", "Chi-Square Tests"),
-    ("Chi-Square Tests", "Categorical Data"),
-    ("Categorical Data", "Association Between Variables"),
-    ("Common Statistical Tests Utilizing p-value", "Chi-Square Goodness of Fit"),
-    ("Chi-Square Goodness of Fit", "Sample Distribution vs. Expected Distribution"),
-    ("Common Statistical Tests Utilizing p-value", "Regression Analysis"),
-    ("Regression Analysis", "Relationship Between Dependent and Independent Variables")
-])
+# Add edges to connect nodes to their descriptions
+edges = [
+    ("t-Tests", "Used to compare the means of two groups."),
+    ("ANOVA", "Used to compare means among three or more groups."),
+    ("Chi-Square Tests", "Used for categorical data to assess the association between variables."),
+    ("Chi-Square Goodness of Fit", "Tests if a sample distribution matches an expected distribution."),
+    ("Regression Analysis", "Used to examine the relationship between dependent and independent variables.")
+]
 
-# Salvataggio del grafo in formato GraphML
-nx.write_graphml(G, "/Users/andreaperlato/Documents/code_repository/flowchart/p_value_utilization.graphml")
+G.add_edges_from(edges)
+
+# Define positions for a better layout
+pos = {
+    "t-Tests": (0, 3),
+    "Used to compare the means of two groups.": (1, 3),
+    "ANOVA": (0, 2),
+    "Used to compare means among three or more groups.": (1, 2),
+    "Chi-Square Tests": (0, 1),
+    "Used for categorical data to assess the association between variables.": (1, 1),
+    "Chi-Square Goodness of Fit": (0, 0),
+    "Tests if a sample distribution matches an expected distribution.": (1, 0),
+    "Regression Analysis": (0, -1),
+    "Used to examine the relationship between dependent and independent variables.": (1, -1),
+}
+
+# Draw the graph
+plt.figure(figsize=(12, 8))
+nx.draw(G, pos, with_labels=True, node_size=5000, node_color="skyblue", font_size=10, font_weight="bold", arrows=True, arrowstyle='-|>', arrowsize=12)
+
+# Adding labels to the edges
+edge_labels = {edge: edge[1] for edge in edges}
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
+
+# Show the plot
+plt.title("Flowchart of Common Statistical Tests Utilizing p-value", fontsize=14)
+plt.show()
+
+
+
+
+
