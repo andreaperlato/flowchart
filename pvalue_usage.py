@@ -1,38 +1,72 @@
-import xml.etree.ElementTree as ET
+import networkx as nx
 
-def create_graphml():
-    # Create the root element
-    graphml = ET.Element("graphml", 
-                         xmlns="http://graphml.graphdrawing.org/xmlns", 
-                         attrib={"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-                                 "xsi:schemaLocation": "http://graphml.graphdrawing.org/xmlns "
-                                                       "http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"})
+# Creazione del grafo
+G = nx.DiGraph()
 
-    # Create the graph element
-    graph = ET.SubElement(graphml, "graph", id="G", edgedefault="directed")
+# Aggiunta dei nodi
+G.add_node("P-Value Utilization Across Fields")
+G.add_node("Medicine and Healthcare")
+G.add_node("Clinical Trials")
+G.add_node("Medical Research")
+G.add_node("Treatment Efficacy")
+G.add_node("Social Sciences")
+G.add_node("Psychology")
+G.add_node("Sociology")
+G.add_node("Education")
+G.add_node("Behavioural Hypotheses")
+G.add_node("Economics and Business")
+G.add_node("Market Research")
+G.add_node("Policy Evaluation")
+G.add_node("Economic Modelling")
+G.add_node("Biology and Environmental Science")
+G.add_node("Genetic Variations")
+G.add_node("Environmental Impacts")
+G.add_node("Ecological Data")
+G.add_node("Common Statistical Tests Utilizing p-value")
+G.add_node("t-Tests")
+G.add_node("Compare Means of Two Groups")
+G.add_node("ANOVA (Analysis of Variance)")
+G.add_node("Compare Means Among Three or More Groups")
+G.add_node("Chi-Square Tests")
+G.add_node("Categorical Data")
+G.add_node("Association Between Variables")
+G.add_node("Chi-Square Goodness of Fit")
+G.add_node("Sample Distribution vs. Expected Distribution")
+G.add_node("Regression Analysis")
+G.add_node("Relationship Between Dependent and Independent Variables")
 
-    # Define nodes
-    nodes = ["Start", "Process", "End"]
-    node_ids = []
-    for i, node in enumerate(nodes):
-        node_id = f"n{i}"
-        node_ids.append(node_id)
-        node_element = ET.SubElement(graph, "node", id=node_id)
-        data = ET.SubElement(node_element, "data", key="d0")
-        data.text = node
+# Aggiunta degli archi
+G.add_edges_from([
+    ("P-Value Utilization Across Fields", "Medicine and Healthcare"),
+    ("Medicine and Healthcare", "Clinical Trials"),
+    ("Medicine and Healthcare", "Medical Research"),
+    ("Medical Research", "Treatment Efficacy"),
+    ("P-Value Utilization Across Fields", "Social Sciences"),
+    ("Social Sciences", "Psychology"),
+    ("Social Sciences", "Sociology"),
+    ("Social Sciences", "Education"),
+    ("Education", "Behavioural Hypotheses"),
+    ("P-Value Utilization Across Fields", "Economics and Business"),
+    ("Economics and Business", "Market Research"),
+    ("Economics and Business", "Policy Evaluation"),
+    ("Economics and Business", "Economic Modelling"),
+    ("P-Value Utilization Across Fields", "Biology and Environmental Science"),
+    ("Biology and Environmental Science", "Genetic Variations"),
+    ("Biology and Environmental Science", "Environmental Impacts"),
+    ("Biology and Environmental Science", "Ecological Data"),
+    ("P-Value Utilization Across Fields", "Common Statistical Tests Utilizing p-value"),
+    ("Common Statistical Tests Utilizing p-value", "t-Tests"),
+    ("t-Tests", "Compare Means of Two Groups"),
+    ("Common Statistical Tests Utilizing p-value", "ANOVA (Analysis of Variance)"),
+    ("ANOVA (Analysis of Variance)", "Compare Means Among Three or More Groups"),
+    ("Common Statistical Tests Utilizing p-value", "Chi-Square Tests"),
+    ("Chi-Square Tests", "Categorical Data"),
+    ("Categorical Data", "Association Between Variables"),
+    ("Common Statistical Tests Utilizing p-value", "Chi-Square Goodness of Fit"),
+    ("Chi-Square Goodness of Fit", "Sample Distribution vs. Expected Distribution"),
+    ("Common Statistical Tests Utilizing p-value", "Regression Analysis"),
+    ("Regression Analysis", "Relationship Between Dependent and Independent Variables")
+])
 
-    # Define edges
-    edges = [(0, 1), (1, 2)]
-    for source, target in edges:
-        ET.SubElement(graph, "edge", source=node_ids[source], target=node_ids[target])
-
-    # Write to a GraphML file
-    tree = ET.ElementTree(graphml)
-    with open("pvalue_usage_v1.graphml", "wb") as f:
-        tree.write(f)
-
-if __name__ == "__main__":
-    create_graphml()
-    print("GraphML file created successfully!")
-
-
+# Salvataggio del grafo in formato GraphML
+nx.write_graphml(G, "/Users/andreaperlato/Documents/code_repository/flowchart/p_value_utilization.graphml")
